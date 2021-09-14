@@ -2,6 +2,9 @@
 
 The Project initializes by taking a .csv files & then filter it to provide the required values.
 
+## Live View
+https://tweet-list1.herokuapp.com/
+
 ## Available Scripts
 
 In the project directory, you can run:
