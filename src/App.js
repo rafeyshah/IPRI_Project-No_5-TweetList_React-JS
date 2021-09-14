@@ -2,7 +2,6 @@ import './App.css';
 import SearchBar from './SearchBar';
 import Slider from './Slider';
 
-import one from './images/1.svg';
 const slideData = [
   {
     index: 0,
