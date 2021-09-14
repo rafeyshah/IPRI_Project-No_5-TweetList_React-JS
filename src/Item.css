@@ -1,0 +1,9 @@
+.box{
+    display: grid;
+	align-items: center;
+	justify-items: center;
+	width: 60%;
+	height: auto;
+	transition: transform .5s ease-in;
+	margin: 8px auto
+}
