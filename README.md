@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# TweetList
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Project initializes by taking a .csv files & then filter it to provide the required values.
 
 ## Available Scripts
 
