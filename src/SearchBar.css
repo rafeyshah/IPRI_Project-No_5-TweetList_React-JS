@@ -57,7 +57,7 @@ cacfd8
 }
 
 #check:checked+.box{
-    width: 500px;
+    width: 38%;
 }
 
 #check:checked+ .box > input{
@@ -71,3 +71,10 @@ cacfd8
 #check:checked+ .box > label:hover{
     transform: scale(1);
 }
+
+@media only screen and (max-width: 600px) {
+    #check:checked+.box{
+        width: 78%;
+    }
+  }
+
