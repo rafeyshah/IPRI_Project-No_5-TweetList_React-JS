@@ -4,7 +4,8 @@ import Slider from './Slider';
 import { useState, useEffect } from 'react';
 import Papa from "papaparse";
 // import * as d3 from 'd3';
-
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import RecentTweets from './RecentTweets';
 
 
 
@@ -127,8 +128,20 @@ function App() {
 
   return (
     <>
-      <SearchBar changeData={search => setsearch(search)} />
-      <Slider heading="Example Slider" slides={slideData} />
+      <Router>
+        <Link to="/RecentTweets"><h1>Recent Tweets</h1></Link>
+        <Link to="/"></Link>
+        <Switch>
+          <Route path="/RecentTweets">
+            <RecentTweets rows={rows} />
+          </Route>
+          <Route path="/">
+
+            <SearchBar changeData={search => setsearch(search)} />
+            <Slider heading="Example Slider" slides={slideData} />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
