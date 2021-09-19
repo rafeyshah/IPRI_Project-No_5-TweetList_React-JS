@@ -1,18 +1,21 @@
 import React from 'react'
+// import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import './SearchBar.css'
 
-function SearchBar() {
+function SearchBar(props) {
+    // const [search, setsearch] = useState([])
     return (
         <div>
             <input type="checkbox" id="check" />
             <div className="box">
-                <input type="text" placeholder="Search Here" />
-                <label for="check"><FontAwesomeIcon icon={faSearch}/></label>
+                <input type="text" placeholder="Search Here" onKeyDown={e => { if (e.key === 'Enter') { props.changeData(e.target.value) } }} />
+                <label for="check"><FontAwesomeIcon icon={faSearch} /></label>
             </div>
         </div>
     )
+
 }
 
 export default SearchBar

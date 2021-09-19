@@ -1,53 +1,137 @@
 import './App.css';
 import SearchBar from './SearchBar';
 import Slider from './Slider';
+import { useState, useEffect } from 'react';
+import Papa from "papaparse";
+// import * as d3 from 'd3';
 
-const slideData = [
-  {
-    index: 0,
-    headline: 'Hashtag Initiators',
-    button: '@ImranKhan PTI',
-    src: "https://images.pexels.com/photos/9558678/pexels-photo-9558678.png"
-  },
-  {
-    index: 1,
-    headline: 'Total Users Tweeting',
-    button: '@1185',
-    src: 'https://images.pexels.com/photos/9558679/pexels-photo-9558679.png'
-  },
-  {
-    index: 2,
-    headline: 'Total Tweets',
-    button: '@20000',
-    src: 'https://images.pexels.com/photos/9558680/pexels-photo-9558680.png'
-  },
-  {
-    index: 3,
-    headline: 'Retweets',
-    button: '@1359',
-    src: 'https://images.pexels.com/photos/9558681/pexels-photo-9558681.png'
-  },
-  {
-    index: 4,
-    headline: 'Likes',
-    button: '@874',
-    src: 'https://images.pexels.com/photos/9558682/pexels-photo-9558682.png'
-  },
-  {
-    index: 5,
-    headline: 'Person with highest tweets',
-    button: '@Zulfiqar',
-    src: 'https://images.pexels.com/photos/9558683/pexels-photo-9558683.png'
-  }
-]
+
+
 
 function App() {
+
+  // HASHTAG Initiator 
+  let hashtag, Usertweets, tTweets, tRetweets, tLikes, PwithHnoTweets
+  function HashagInitiator() {
+    hashtag = (rows[rows.length - 1].username);  // -1 for Header 
+  }
+
+  // Count Unique
+  function countUnique(iterable) {
+    return new Set(iterable).size; //Distinct Tweets
+  }
+
+  // Count Distinct Tweets
+  function countUsersTweets() {
+    Usertweets = countUnique(rows.map(row => row.username)) //Distinct Tweets
+  }
+
+  // Count Tweets
+  function countTtweets() {
+    tTweets = rows.length - 1;  // -1 for Header 
+  }
+
+  // Total Retweets Count
+  function tRetweetsCount() {
+    tRetweets = rows.reduce((a, v) => a + parseInt(v.retweets_count, 10), 0); //Reduce method to add all string values
+  }
+
+  // Total Likes Count 
+  function tLikesCount() {
+    tLikes = rows.reduce((a, v) => a + parseInt(v.likes_count, 10), 0)
+  }
+
+  // Person With Highest No of Tweets
+  function PwHnoTweets(array) {
+    if (array.length === 0)
+      return null;
+    var modeMap = {};
+    var maxEl = array[0].username, maxCount = 1;
+    for (var i = 0; i < array.length; i++) {
+      var el = array[i].username;
+      if (modeMap[el] == null)
+        modeMap[el] = 1;
+      else
+        modeMap[el]++;
+      if (modeMap[el] > maxCount) {
+        maxEl = el;
+        maxCount = modeMap[el];
+      }
+    }
+    return maxEl;
+  }
+  /************************MAIN PROGRAM ***********************/
+  const [search, setsearch] = useState([])
+  const [rows, setRows] = useState(null);
+  useEffect(() => {
+    Papa.parse(`../files/${search}.csv`, {
+      download: true,
+      header: true,
+      complete: data => {
+        setRows(data.data);
+      }
+    });
+  }, [search]);
+
+  if (rows != null) {
+    HashagInitiator()
+    countUsersTweets()
+    countTtweets()
+    tRetweetsCount()
+    tLikesCount()
+    PwithHnoTweets = PwHnoTweets(rows)
+  }/******************************************************************/
+
+
+
+  /******************** Slides Data *************************/
+  const slideData = [
+    {
+      index: 0,
+      headline: 'Hashtag Initiators',
+      button: `@${hashtag}`,
+      src: "https:images.pexels.com/photos/9558678/pexels-photo-9558678.png"
+    },
+    {
+      index: 1,
+      headline: 'Total Users Tweeting',
+      button: `@${Usertweets}`,
+      src: 'https:images.pexels.com/photos/9558679/pexels-photo-9558679.png'
+    },
+    {
+      index: 2,
+      headline: 'Total Tweets',
+      button: `@${tTweets}`,
+      src: 'https:images.pexels.com/photos/9558680/pexels-photo-9558680.png'
+    },
+    {
+      index: 3,
+      headline: 'Retweets',
+      button: `@${tRetweets}`,
+      src: 'https:images.pexels.com/photos/9558681/pexels-photo-9558681.png'
+    },
+    {
+      index: 4,
+      headline: 'Likes',
+      button: `@${tLikes}`,
+      src: 'https:images.pexels.com/photos/9558682/pexels-photo-9558682.png'
+    },
+    {
+      index: 5,
+      headline: 'Person with highest tweets',
+      button: `@${PwithHnoTweets}`,
+      src: 'https:images.pexels.com/photos/9558683/pexels-photo-9558683.png'
+    }
+  ]
+
+
   return (
     <>
-      <SearchBar />
+      <SearchBar changeData={search => setsearch(search)} />
       <Slider heading="Example Slider" slides={slideData} />
     </>
   );
 }
+
 
 export default App;
