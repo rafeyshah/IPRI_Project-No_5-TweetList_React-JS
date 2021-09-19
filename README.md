@@ -5,6 +5,10 @@ The Project initializes by taking a .csv files & then filter it to provide the r
 ## Live View
 https://tweet-list1.herokuapp.com/
 
+
+## Implemented Link
+https://www.loom.com/share/f80c6fafe8834a8c85d727faf6bfae50
+
 ## Available Scripts
 
 In the project directory, you can run:
