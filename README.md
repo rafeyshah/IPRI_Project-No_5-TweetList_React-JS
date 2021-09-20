@@ -1,6 +1,6 @@
 # TweetList
 
-The Project initializes by taking a .csv files & then filter it to provide the required values.
+The Project initializes by taking a .csv file & then filter it to provide the required values.
 
 ## Live View
 https://tweet-list1.herokuapp.com/
