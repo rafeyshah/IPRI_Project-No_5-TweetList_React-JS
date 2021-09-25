@@ -22,7 +22,7 @@ input[type="checkbox"] {
 .box {
     position: absolute;
     top: 30%;
-    left: 50%;
+    left: 63%;
     transform: translate(-50%, -50%);
     width: 60px;
     height: 60px;

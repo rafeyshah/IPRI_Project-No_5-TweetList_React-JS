@@ -43,6 +43,40 @@ body {
   cursor: default;
 }
 
+.container {
+  position: absolute;
+  top: 30%;
+  left: 46%;
+  transform: translate(-50%, -50%);
+  outline: none;
+}
+
+.upload-box {
+  font-size: 16px;
+  background: transparent;
+  color: gray;
+  border-radius: 50px;
+  box-shadow: -10px -10px 15px #edeff1, 10px 10px 15px #cacfd8;
+  width: 350px;
+}
+
+::-webkit-file-upload-button {
+  color: white;
+  background: gray;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  box-shadow: -10px -10px 15px #edeff1, 10px 10px 15px #cacfd8;
+  outline: none;
+}
+
+::-webkit-file-upload-button:hover {
+  background-color: #5b5c61;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

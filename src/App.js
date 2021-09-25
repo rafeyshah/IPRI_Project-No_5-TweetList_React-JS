@@ -27,7 +27,7 @@ function App() {
 
   // Count Tweets
   function countTtweets() {
-    tTweets = rows.length -2;  // -1 for Header && -1 for null
+    tTweets = rows.length - 2;  // -1 for Header && -1 for null
   }
 
 
@@ -153,11 +153,11 @@ function App() {
           </Route>
           <Route path="/">
             <div
-              className="drop"
+              className="drop"                           //************** ************/
               onDragOver={(e) => {
-                e.preventDefault();
+                e.preventDefault();                             //DRAG N DROP
               }}
-              onDrop={(e) => {
+              onDrop={(e) => {                          /************ *****************/
                 e.preventDefault();
 
                 Array.from(e.dataTransfer.files)
@@ -168,8 +168,19 @@ function App() {
                   })
               }}
             >
+
               <SearchBar changeData={search => setsearch(search)} />
+              <div className="container">
+                <input type="file" className="upload-box" accept=".csv" id="csvFile"
+                  onChange={async e => {                                  /******************* ***********************/
+                    let promise = await e.target.files[0].text()          /**** Choose from files ****/
+                    let result = parse(promise, { header: true });        /******************* ***********************/
+                    setRows(result.data);
+                  }}></input>
+              </div>
+
               <Slider heading="Example Slider" slides={slideData} />
+
             </div>
           </Route>
         </Switch>
