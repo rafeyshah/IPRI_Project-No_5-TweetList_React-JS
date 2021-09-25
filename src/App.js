@@ -2,19 +2,17 @@ import './App.css';
 import SearchBar from './SearchBar';
 import Slider from './Slider';
 import { useState, useEffect } from 'react';
-import Papa from "papaparse";
+import Papa, { parse } from "papaparse";
 // import * as d3 from 'd3';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import RecentTweets from './RecentTweets';
-
-
 
 function App() {
 
   // HASHTAG Initiator 
   let hashtag, Usertweets, tTweets, tRetweets, tLikes, PwithHnoTweets
   function HashagInitiator() {
-    hashtag = (rows[rows.length - 1].username);  // -1 for Header 
+    hashtag = (rows[rows.length - 2].username);  // -1 for Header 
   }
 
   // Count Unique
@@ -29,18 +27,36 @@ function App() {
 
   // Count Tweets
   function countTtweets() {
-    tTweets = rows.length - 1;  // -1 for Header 
+    tTweets = rows.length;  // -1 for Header 
   }
+
 
   // Total Retweets Count
   function tRetweetsCount() {
-    tRetweets = rows.reduce((a, v) => a + parseInt(v.retweets_count, 10), 0); //Reduce method to add all string values
+    tRetweets = rows.reduce(function (r, a) {
+      if (typeof a.retweets_count === 'undefined')
+        return r
+      else
+        return r + parseInt(a.retweets_count);
+
+
+      //    ^^^ use the last result without property
+    }, 0); //Reduce method to add all string values
   }
 
   // Total Likes Count 
   function tLikesCount() {
-    tLikes = rows.reduce((a, v) => a + parseInt(v.likes_count, 10), 0)
+    tLikes = rows.reduce(function (r, a) {
+      if (typeof a.likes_count === 'undefined')
+        return r
+      else
+        return r + parseInt(a.likes_count);
+
+
+      //    ^^^ use the last result without property
+    }, 0); //Reduce method to add all string values
   }
+
 
   // Person With Highest No of Tweets
   function PwHnoTweets(array) {
@@ -74,7 +90,7 @@ function App() {
     });
   }, [search]);
 
-  if (rows != null) {
+  if (rows !== null) {
     HashagInitiator()
     countUsersTweets()
     countTtweets()
@@ -125,8 +141,8 @@ function App() {
     }
   ]
 
-
   return (
+
     <>
       <Router>
         <Link to="/RecentTweets"><h1>Recent Tweets</h1></Link>
@@ -136,9 +152,25 @@ function App() {
             <RecentTweets rows={rows} />
           </Route>
           <Route path="/">
+            <div
+              className="drop"
+              onDragOver={(e) => {
+                e.preventDefault();
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
 
-            <SearchBar changeData={search => setsearch(search)} />
-            <Slider heading="Example Slider" slides={slideData} />
+                Array.from(e.dataTransfer.files)
+                  .forEach(async (file) => {
+                    const text = await file.text();
+                    const result = parse(text, { header: true });
+                    setRows(result.data);
+                  })
+              }}
+            >
+              <SearchBar changeData={search => setsearch(search)} />
+              <Slider heading="Example Slider" slides={slideData} />
+            </div>
           </Route>
         </Switch>
       </Router>

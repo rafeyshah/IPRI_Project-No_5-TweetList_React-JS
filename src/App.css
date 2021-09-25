@@ -3,6 +3,16 @@
   background-color: white;
 }
 
+body {
+  overflow-x: hidden;
+
+}
+
+.drop {
+  width: 200vw;
+  height: 200vh;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
