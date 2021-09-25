@@ -12,7 +12,7 @@ function App() {
   // HASHTAG Initiator 
   let hashtag, Usertweets, tTweets, tRetweets, tLikes, PwithHnoTweets
   function HashagInitiator() {
-    hashtag = (rows[rows.length - 2].username);  // -1 for Header 
+    hashtag = (rows[rows.length - 2].username);  // -1 for Header && -1 for null
   }
 
   // Count Unique
@@ -27,7 +27,7 @@ function App() {
 
   // Count Tweets
   function countTtweets() {
-    tTweets = rows.length;  // -1 for Header 
+    tTweets = rows.length -2;  // -1 for Header && -1 for null
   }
 
 
